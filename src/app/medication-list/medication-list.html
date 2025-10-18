@@ -82,17 +82,26 @@
           </tr>
         </tbody>
       </table>
+      <!-- NOVI ELEMENTI ZA NASLOV I OPIS -->
+     <h4>Letter Title:</h4>
+     <input type="text" [(ngModel)]="letterTitle" placeholder="Enter the title of the letter" class="letter-input-title" />
 
-    <h4>Text:</h4>
-    <textarea  [(ngModel)]="letterText" rows="8" 
-      placeholder="Text">
-    </textarea>
+     <h4>Letter Description:</h4>
+     <textarea [(ngModel)]="letterDescription" rows="4" 
+        placeholder="Brief description of the letter (e.g., purpose, patient info)">
+     </textarea>
+     <!-- KRAJ NOVIH ELEMENATA -->
 
-    <div class="modal-actions">
-      <button (click)="closeModal()" class="btn-cancel">Close</button>
-      <button (click)="sendLetter()" class="btn-send"  [disabled]="!letterText.trim()">
-        Send
-        </button>
-      </div>
-    </div>
-</div>
+    <h4>Main Text:</h4>
+    <textarea  [(ngModel)]="letterText" rows="8" 
+      placeholder="Main body of the letter">
+    </textarea>
+
+    <div class="modal-actions">
+      <button (click)="closeModal()" class="btn-cancel">Close</button>
+      <button (click)="sendLetter()" class="btn-send"  
+        [disabled]="!letterTitle.trim() || !letterText.trim()">
+        Send
+        </button>
+      </div>
+        </div>

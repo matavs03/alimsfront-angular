@@ -3,6 +3,8 @@ import { MedicationService } from '../medication-service';
 import { Medication } from '../medication';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { AdminService } from '../admin-service';
 
 
 @Component({
@@ -25,18 +27,19 @@ export class MedicationList implements OnInit {
 
   selectedLekId: string | null = null;
 
-  // NOVO: Lista lekova za pismo
   selectedMedications: Medication[] = [];
-  // NOVO: Kontrola prikaza modala
   isModalOpen: boolean = false;
-  // NOVO: Tekst koji će se upisati u pismo
+  letterTitle: string = '';
+  letterDescription: string = '';
   letterText: string = '';
 
 
 
   constructor(
     private medicationService: MedicationService,
-    private cdRef: ChangeDetectorRef // INJEKTOVAN ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private http: HttpClient,
+    private adminService: AdminService
   ) { }
 
 
@@ -136,17 +139,50 @@ export class MedicationList implements OnInit {
   closeModal(): void {
     this.isModalOpen = false;
     this.letterText = '';
+    this.letterTitle = '';
+    this.letterDescription = '';
   }
 
   sendLetter(): void {
-    console.log('--- Slanje Pisma ---');
-    console.log('Lekovi:', this.selectedMedications);
-    console.log('Tekst Pisma:\n', this.letterText);
+    this.adminService.currentAdmin$.subscribe(admin => {
+      if (!admin) {
+        alert('No admin logged in!');
+        return;
+      }
 
-    alert('Letter sent');
+      if (this.selectedMedications.length === 0) {
+        alert('Select at least one medication!');
+        return;
+      }
 
-    this.selectedMedications = [];
-    this.closeModal();
+      const letterDTO = {
+        title: this.letterTitle,
+        description: this.letterDescription,
+        content: this.letterText,
+        adminId: admin.id,
+        medicationIds: this.selectedMedications.map(m => m.id)
+      };
+
+      this.http.post('http://localhost:8080/api/v1/letters', letterDTO)
+        .subscribe({
+          next: (response) => {
+            console.log('Letter saved:', response);
+            
+            alert('Letter successfully sent!');
+            this.letterTitle = '';
+            this.letterDescription = '';
+            this.letterText = '';
+            this.selectedMedications = [];
+            this.closeModal();
+            this.cdRef.markForCheck();
+            
+          },
+          error: (err) => {
+            console.error('Error saving letter', err);
+            alert('Error sending letter!');
+          }
+        });
+    }).unsubscribe();
   }
 
   emptySelectedMedications(): void {
