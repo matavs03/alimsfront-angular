@@ -1,0 +1,21 @@
+<h1 *ngIf="loggedInAdminName$ | async as name">Hello, {{ name }}</h1>
+<h2>Admin list</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Username</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor = "let admin of (admins$ | async)"> 
+            <td> {{ admin.firstName }} </td>
+            <td> {{ admin.lastName }} </td>
+            <td> {{ admin.username }} </td>
+        </tr>
+        <tr *ngIf="!(admins$ | async)?.length">
+            <td colspan="3">Nema dostupnih admina.</td>
+        </tr>
+    </tbody>
+</table>

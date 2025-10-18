@@ -1,0 +1,32 @@
+<div class="page-container">
+  <div class="content-wrap">
+
+    <div *ngIf="!loggedIn" class="login-form">
+      <h2>Login</h2>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div>
+          <label>Username:</label>
+          <input formControlName="username" />
+        </div>
+        <div>
+          <label>Password:</label>
+          <input type="password" formControlName="password" />
+        </div>
+        <button type="submit">Login</button>
+      </form>
+      <p *ngIf="loginError" style="color:red">{{ loginError }}</p>
+    </div>
+
+    <div *ngIf="loggedIn">
+      <app-admin-list></app-admin-list>
+      <app-medication-list></app-medication-list>
+    </div>
+
+  </div>
+
+  <!-- FOOTER JE OVDE, VAN *ngIf BLOKOVA -->
+  <footer>
+    <p>&copy; 2025 Matija Veljković-Šupić & David Bošković</p>
+  </footer>
+</div>
+

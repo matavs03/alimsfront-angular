@@ -1,0 +1,99 @@
+<h2>Medications list</h2>
+
+<!-- UKLONJENO: Stari letter-actions div. Akciona dugmad su sada fiksirana. -->
+
+<div class="alphabet-buttons">
+   <button *ngFor="let letter of alphabet" (click)="filterByLetter(letter)">
+     {{ letter }}
+     </button>
+   <button (click)="filterByLetter('')" class="all-btn">All</button>
+</div>
+
+<div class="pagination-controls">
+   <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
+   <span>Page {{ currentPage }} of {{ totalPages }}</span>
+   <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+</div>
+
+<table class="table table-striped" *ngIf="displayedMedications.length > 0">
+   <thead>
+     <tr>
+       <th>ID</th>
+       <th>Name</th>
+       <th>Manufacturer</th>
+       <th>INN</th>
+       <th>Dosage form</th>
+       </tr>
+     </thead>
+   <tbody>
+    <tr *ngFor="let medication of displayedMedications; trackBy: trackByMedicationId"
+      (click)="onRowClick(medication)" [class.selected]="isLekSelected(medication)"> 
+       <td>{{ medication.id }}</td>
+       <td>{{ medication.name }}</td>
+       <td>{{ medication.manufacturer }}</td>
+       <td>{{ medication.inn }}</td>
+       <td>{{ medication.dosage_form }}</td>
+       </tr>
+     </tbody>
+</table>
+
+<button class="back-to-top" (click)="scrollToTop()">Back to Top</button>
+
+<!-- NOVO: Fiksne akcije za pismo i pražnjenje liste, prikazuju se samo ako ima selektovanih lekova -->
+<div class="fixed-letter-actions" *ngIf="selectedMedications.length > 0">
+  <button (click)="emptySelectedMedications()" class="empty-list-btn">
+     Delete selection ({{ selectedMedications.length }})
+    </button>
+
+  <button (click)="openModal()" class="create-letter-btn">
+     Make a letter ({{ selectedMedications.length }})
+     </button>
+</div>
+
+
+<div class="pagination-controls">
+   <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
+   <span>Page {{ currentPage }} of {{ totalPages }}</span>
+   <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+</div>
+
+<!-- Modalni prozor za pismo (nepromenjen) -->
+<div class="modal-overlay" *ngIf="isModalOpen">
+   <div class="modal-content">
+     <h3>Letter</h3>
+    
+     <h4>Selected medication:</h4>
+     <table class="table table-modal">
+       <thead>
+         <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Manufacturer</th>
+          <th>INN</th>
+          <th>Dosage form</th>
+           </tr>
+        </thead>
+      <tbody>
+        <tr *ngFor="let medication of selectedMedications">
+          <td>{{ medication.id }}</td>
+          <td>{{ medication.name }}</td>
+          <td>{{ medication.manufacturer }}</td>
+          <td>{{ medication.inn }}</td>
+          <td>{{ medication.dosage_form }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+    <h4>Text:</h4>
+    <textarea       [(ngModel)]="letterText" rows="8" 
+      placeholder="Text">
+    </textarea>
+
+    <div class="modal-actions">
+      <button (click)="closeModal()" class="btn-cancel">Close</button>
+      <button (click)="sendLetter()" class="btn-send"  [disabled]="!letterText.trim()">
+        Send
+        </button>
+      </div>
+    </div>
+</div>
