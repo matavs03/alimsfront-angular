@@ -1,6 +1,5 @@
 <h2>Medications list</h2>
 
-<!-- UKLONJENO: Stari letter-actions div. Akciona dugmad su sada fiksirana. -->
 
 <div class="alphabet-buttons">
    <button *ngFor="let letter of alphabet" (click)="filterByLetter(letter)">
@@ -39,7 +38,7 @@
 
 <button class="back-to-top" (click)="scrollToTop()">Back to Top</button>
 
-<!-- NOVO: Fiksne akcije za pismo i pražnjenje liste, prikazuju se samo ako ima selektovanih lekova -->
+
 <div class="fixed-letter-actions" *ngIf="selectedMedications.length > 0">
   <button (click)="emptySelectedMedications()" class="empty-list-btn">
      Delete selection ({{ selectedMedications.length }})
@@ -57,7 +56,7 @@
    <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
 </div>
 
-<!-- Modalni prozor za pismo (nepromenjen) -->
+
 <div class="modal-overlay" *ngIf="isModalOpen">
    <div class="modal-content">
      <h3>Letter</h3>
@@ -85,7 +84,7 @@
       </table>
 
     <h4>Text:</h4>
-    <textarea       [(ngModel)]="letterText" rows="8" 
+    <textarea  [(ngModel)]="letterText" rows="8" 
       placeholder="Text">
     </textarea>
 

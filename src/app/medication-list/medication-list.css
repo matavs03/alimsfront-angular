@@ -1,4 +1,4 @@
-/* Opšti stil komponenti */
+
 :host {
   display: block;
   padding: 10px 30px 30px 30px;
@@ -7,7 +7,7 @@
   min-height: 100vh;
 }
 
-/* Naslov */
+
 h2 {
   text-align: left;
   color: #4a90e2;
@@ -16,7 +16,7 @@ h2 {
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-/* Tabela */
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -25,17 +25,14 @@ table {
   border-radius: 8px;
   overflow: hidden;
 
-  /* --- IZMENA ZA RAZMAKE --- */
   border-spacing: 0;
-  /* Dodato: Uklanja razmak između ćelija */
+ 
   border: none;
-  /* Dodato: Uklanja sve granice oko cele tabele */
-  /* ------------------------- */
 
   margin-top: 0 !important;
 }
 
-/* Zaglavlje tabele */
+
 th {
   background: linear-gradient(90deg, #4a90e2, #357ABD);
   color: white;
@@ -46,23 +43,22 @@ th {
   letter-spacing: 0.5px;
 }
 
-/* --- IZMENE: FIKSNE ŠIRINE KOLONA ZA STABILNOST LAYOUT-a --- */
-/* 1. ID */
+
 th:nth-child(1) {
   width: 10%;
 }
 
-/* 2. NAME */
+
 th:nth-child(2) {
   width: 15%;
 }
 
-/* 3. MANUFACTURER */
+
 th:nth-child(3) {
   width: 30%;
 }
 
-/* 4. INN */
+
 th:nth-child(4) {
   width: 15%;
 }
@@ -72,29 +68,26 @@ th:nth-child(5) {
   width: 30%;
 }
 
-/* --- KRAJ IZMENA ZA FIKSNE ŠIRINE --- */
 
-/* Redovi tabele */
 td {
   padding: 10px;
-  /* Smanjeno sa 12px na 10px - kako ste tražili */
   border-bottom: 1px solid #eee;
   color: #333;
 }
 
-/* Naizmenični redovi */
+
 tbody tr:nth-child(even) {
   background: #f4f6f8;
 }
 
-/* Hover efekat */
+
 tbody tr:hover {
   background: #e1f0ff;
   cursor: pointer;
   transition: background 0.2s;
 }
 
-/* Loading poruka */
+
 em {
   display: block;
   text-align: center;
@@ -103,7 +96,7 @@ em {
   margin-top: 20px;
 }
 
-/* Kontrole za paginaciju */
+
 .pagination-controls {
   margin-top: 15px;
   margin-bottom: 15px;
@@ -132,14 +125,13 @@ em {
   cursor: not-allowed;
 }
 
-/* Dugmad za abecedu */
+
 .alphabet-buttons {
   margin-bottom: 15px;
   display: flex;
   flex-wrap: wrap;
   gap: 13px;
   justify-content: center;
-  /* FIKSIRANO: Dodato za horizontalno centriranje */
 }
 
 .alphabet-buttons button {
@@ -147,11 +139,9 @@ em {
   border: 1px solid #ccc;
   border-radius: 4px;
   padding: 5px 8px;
-  /* IZMENA: Smanjen horizontalni padding sa 10px na 8px */
   cursor: pointer;
   font-weight: bold;
   text-align: center;
-  /* Dodato za eksplicitno centriranje teksta */
   transition: background-color 0.2s, color 0.2s;
 }
 
@@ -164,7 +154,7 @@ em {
   background-color: #d4d4d4;
 }
 
-/* Dugme 'Nazad na vrh' */
+
 .back-to-top {
   position: fixed;
   bottom: 20px;
@@ -185,40 +175,33 @@ em {
   background-color: #007bff;
 }
 
-/* Stilovi preuzeti iz postojeće sekcije (za bojenje/hover) */
+
 tr {
   cursor: pointer;
   transition: none !important;
-  /* Poništite tranziciju da ne treperi */
 }
 
 tr:hover td {
   background-color: #e1f0ff !important;
-  /* Osigurava da se hover primenjuje na ćelije */
 }
 
 
-/* Stil za selektovani red */
+
 tr.selected {
   background-color: #4a90e2 !important;
-  /* Tamnija plava, Vaš izbor */
   color: white !important;
-  /* Promenjeno u belu za bolji kontrast */
 }
 
-/* --- KRITIČNA IZMENA: Primena stila direktno na ćelije selektovanog reda --- */
-/* Ovo rešava problem gde se boja nije protezala celim redom */
+
 tr.selected td {
   background-color: #4a90e2 !important;
   color: white !important;
   border-color: #4a90e2 !important;
-  /* Da se ne vidi bela linija između */
 }
 
-/* Kraj kritične izmene */
 
 
-/* Stil za ikonu/emoji potvrde */
+
 .selected-icon {
   font-size: 1.2em;
   display: block;
@@ -228,17 +211,14 @@ tr.selected td {
   font-weight: bold;
 }
 
-/* ---------------- NOVI FIKSIRANI STILOVI ZA PISMO I PRAŽNJENJE LISTE ---------------- */
 
-/* Fiksni kontejner za akcije */
+
 .fixed-letter-actions {
   position: fixed;
   bottom: 70px;
-  /* Postavlja se 70px od dna, iznad back-to-top (20px) + gap */
   right: 20px;
   display: flex;
   flex-direction: column;
-  /* Vertikalno slaganje */
   gap: 10px;
   z-index: 1000;
 }
@@ -253,14 +233,11 @@ tr.selected td {
   font-size: 16px;
   font-weight: 600;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-  /* Senka ista kao back-to-top */
   transition: background-color 0.3s;
 }
 
-/* Stil za dugme "Napravi pismo" (Akcija) */
 .create-letter-btn {
   background-color: #4CAF50;
-  /* Zelena za akciju "Kreiraj" */
 }
 
 .create-letter-btn:hover:not([disabled]) {
@@ -273,10 +250,8 @@ tr.selected td {
   box-shadow: none;
 }
 
-/* Stil za dugme "Isprazni listu" (Destruktivna akcija) */
 .empty-list-btn {
   background-color: #dc3545;
-  /* Crvena */
 }
 
 .empty-list-btn:hover:not([disabled]) {
@@ -289,14 +264,11 @@ tr.selected td {
   box-shadow: none;
 }
 
-/* Stari .letter-actions stilovi više nisu relevantni */
 .letter-actions {
   display: none;
-  /* Skriveno, jer koristimo fiksni kontejner */
 }
 
 
-/* MODAL STYLES */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -304,7 +276,6 @@ tr.selected td {
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.7);
-  /* Tamniji overlay */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -314,19 +285,11 @@ tr.selected td {
 .modal-content {
   background: #fff;
   padding: 40px;
-  /* Povećano sa 30px na 40px - kako ste tražili */
   border-radius: 10px;
-  /* Malo veće zaobljenje */
   width: 90%;
   max-width: 1000px;
-  /* Povećano sa 800px na 1000px - kako ste tražili */
-
-  /* KLJUČNE IZMENE ZA SKROLOVANJE: */
   max-height: 90vh;
-  /* Ograničava visinu kontejnera na 90% visine ekrana */
   overflow-y: auto;
-  /* Omogućava vertikalno skrolovanje unutar modala */
-
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
   transform: scale(1);
   transition: transform 0.3s ease-out;
@@ -385,7 +348,7 @@ tr.selected td {
   transition: background-color 0.3s;
 }
 
-/* Pošalji Dugme (Plava, usklađena sa temom) */
+
 .btn-send {
   background-color: #4a90e2;
   color: white;
@@ -402,7 +365,6 @@ tr.selected td {
   box-shadow: none;
 }
 
-/* Zatvori Dugme */
 .btn-cancel {
   background-color: #ccc;
   color: #333;
