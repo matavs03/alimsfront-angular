@@ -1,30 +1,23 @@
-/* login.css */
-
-/* Globalni stilovi za telo stranice */
 body {
-    /* Uklanjamo margine i padding, postavljamo moderni font */
+
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    /* Blagi gradient kao pozadina, prijatna boja */
     background: linear-gradient(135deg, #f0f4f8 0%, #c4d7e0 100%);
-    /* Centriramo formu vertikalno i horizontalno na ekranu */
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
 }
 
-/* Kontejner forme za prijavu */
+
 .login-form {
     background-color: #ffffff;
-    /* Blaga senka daje efekat izdignutosti i dubine */
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
     padding: 40px;
     width: 100%;
     max-width: 380px;
-    /* Koristimo Flexbox za uređenje unutrašnjih elemenata */
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -32,7 +25,7 @@ body {
 }
 
 .login-form:hover {
-    transform: translateY(-2px); /* Lagana animacija pri prelasku mišem */
+    transform: translateY(-2px);
 }
 
 /* Naslov */
@@ -43,11 +36,10 @@ body {
     font-size: 1.8em;
 }
 
-/* Stilovi za input polja i labelu */
 .login-form div {
     display: flex;
     flex-direction: column;
-    gap: 8px; /* Razmak između labele i inputa */
+    gap: 8px;
 }
 
 .login-form label {
@@ -65,16 +57,16 @@ body {
     transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-/* Fokus na input polju */
+
 .login-form input:focus {
-    border-color: #4a90e2; /* Plava boja pri fokusu */
+    border-color: #4a90e2;
     box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
-    outline: none; /* Uklanja defaultni fokus brauzera */
+    outline: none;
 }
 
-/* Stilovi za dugme */
+
 .login-form button {
-    background-color: #4a90e2; /* Primarna boja */
+    background-color: #4a90e2; 
     color: white;
     padding: 15px;
     border: none;
@@ -87,14 +79,14 @@ body {
 }
 
 .login-form button:hover {
-    background-color: #3a7bd5; /* Tamnija nijansa pri prelasku mišem */
+    background-color: #3a7bd5; 
 }
 
 .login-form button:active {
-    transform: scale(0.99); /* Efekat pritiska */
+    transform: scale(0.99);
 }
 
-/* Stil za poruku o grešci */
+
 .login-form p[style="color:red"] {
     color: #e53935 !important;
     text-align: center;
@@ -102,7 +94,7 @@ body {
     margin-top: 5px;
     padding: 10px;
     border-radius: 6px;
-    background-color: rgba(229, 57, 53, 0.1); /* Blaga crvena pozadina */
+    background-color: rgba(229, 57, 53, 0.1);
 }
 
 html, body {
@@ -116,7 +108,7 @@ html, body {
 }
 
 .content-wrap {
-  padding-bottom: 60px; /* visina footera */
+  padding-bottom: 60px;
 }
 
 footer {

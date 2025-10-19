@@ -28,7 +28,7 @@ export class Login {
     
     const { username, password } = this.loginForm.value;
 
-    // Uzimamo sve admine i proveravamo korisnika
+  
     this.adminService.getAdminsList().subscribe(admins => {
       const admin = admins.find(a => a.username === username && a.password === password);
 

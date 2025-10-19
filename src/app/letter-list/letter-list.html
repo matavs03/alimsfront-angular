@@ -1,0 +1,51 @@
+<div class="page-header">
+  
+  <img src="/alims.jpeg" alt="Alims logo" class="header-logo" />
+  <h2>ALIMS - Letters for healthcare workers</h2>
+</div>
+
+<div *ngIf="displayedLetters.length === 0">
+  <em>No letters available.</em>
+</div>
+
+<div class="letters-container">
+  <div *ngFor="let letter of displayedLetters" class="letter-card">
+    <h3>{{ letter.title }}</h3>
+    <p class="letter-date">{{ letter.date | date: 'medium' }}</p>
+    <p class="letter-description">{{ letter.description }}</p>
+
+    <div class="letter-footer">
+      <span><strong>Admin:</strong> {{ letter.adminName }}</span>
+      <button class="btn-read" (click)="openLetter(letter)">Read Letter</button>
+    </div>
+  </div>
+  <footer>
+    <p>&copy; 2025 Matija Veljković-Šupić & David Bošković</p>
+  </footer>
+</div>
+
+<div class="pagination-controls" *ngIf="totalPages > 1">
+  <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
+  <span>Page {{ currentPage }} / {{ totalPages }}</span>
+  <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+  
+</div>
+
+<div class="modal-overlay" *ngIf="isModalOpen">
+  <div class="modal-content">
+    <h3>{{ selectedLetter?.title }}</h3>
+    <p><strong>Date:</strong> {{ selectedLetter?.date | date: 'medium' }}</p>
+    <p><strong>Admin:</strong> {{ selectedLetter?.adminName }}</p>
+    <p><strong>Medications:</strong> {{ (selectedLetter?.medicationNames ?? []).join(', ') }}</p>
+
+
+    <h4>Letter Content:</h4>
+    <p class="letter-text">{{ selectedLetter?.content }}</p>
+
+    <div class="modal-actions">
+      <button class="btn-cancel" (click)="closeModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+

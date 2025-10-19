@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { AdminService } from '../admin-service';
+import { LetterService, LetterDTO } from '../letter-service';
 
 
 @Component({
@@ -33,23 +34,17 @@ export class MedicationList implements OnInit {
   letterDescription: string = '';
   letterText: string = '';
 
-
-
   constructor(
     private medicationService: MedicationService,
     private cdRef: ChangeDetectorRef,
     private http: HttpClient,
-    private adminService: AdminService
+    private adminService: AdminService,
+    private letterService: LetterService
   ) { }
-
-
-
 
   ngOnInit(): void {
     this.getMedications();
   }
-
-
 
   private getMedications() {
     this.medicationService.getMedicationList().subscribe(data => {
@@ -63,7 +58,6 @@ export class MedicationList implements OnInit {
     this.currentLetter = letter;
     this.currentPage = 1;
     this.updateDisplayedMedications();
-    // this.cdRef.markForCheck(); 
   }
 
   updateDisplayedMedications() {
@@ -84,7 +78,6 @@ export class MedicationList implements OnInit {
     if (page < 1 || page > this.totalPages) return;
     this.currentPage = page;
     this.updateDisplayedMedications();
-    // this.cdRef.markForCheck(); 
   }
 
   nextPage() {
@@ -105,24 +98,16 @@ export class MedicationList implements OnInit {
 
   onRowClick(lek: Medication): void {
     const lekId = String(lek.id);
-
-    // Logika za dodavanje/uklanjanje iz selectedMedications (toggle)
     const index = this.selectedMedications.findIndex(m => m.id === lekId);
-
     if (index > -1) {
-      // Lek je već u listi, ukloni ga (Poništi bojenje i izbaci iz liste)
       this.selectedMedications.splice(index, 1);
     } else {
-      // Lek nije u listi, dodaj ga (Postavi bojenje i dodaj u listu)
       this.selectedMedications.push(lek);
-
     }
-
     console.log('Selected medication:', this.selectedMedications);
     this.cdRef.markForCheck(); // Forsira proveru promena
   }
 
-  // NOVO: Provera za ispravno obeležavanje reda (sa ikonom)
   isLekSelected(lek: Medication): boolean {
     return this.selectedMedications.some(m => m.id === lek.id);
   }
@@ -144,46 +129,43 @@ export class MedicationList implements OnInit {
   }
 
   sendLetter(): void {
-    this.adminService.currentAdmin$.subscribe(admin => {
-      if (!admin) {
-        alert('No admin logged in!');
-        return;
+  this.adminService.currentAdmin$.subscribe(admin => {
+    if (!admin) {
+      alert('No admin logged in!');
+      return;
+    }
+
+    if (this.selectedMedications.length === 0) {
+      alert('Select at least one medication!');
+      return;
+    }
+
+    const letterDTO = {
+      title: this.letterTitle,
+      description: this.letterDescription,
+      content: this.letterText,
+      adminId: admin.id,
+      medicationIds: this.selectedMedications.map(m => m.id)
+    };
+
+    this.letterService.sendLetter(letterDTO).subscribe({
+      next: (response: any) => {
+        console.log('Letter saved:', response);
+        alert('Letter successfully sent!');
+        this.letterTitle = '';
+        this.letterDescription = '';
+        this.letterText = '';
+        this.selectedMedications = [];
+        this.closeModal();
+        this.cdRef.markForCheck();
+      },
+      error: (err: any) => {
+        console.error('Error saving letter', err);
+        alert('Error sending letter!');
       }
-
-      if (this.selectedMedications.length === 0) {
-        alert('Select at least one medication!');
-        return;
-      }
-
-      const letterDTO = {
-        title: this.letterTitle,
-        description: this.letterDescription,
-        content: this.letterText,
-        adminId: admin.id,
-        medicationIds: this.selectedMedications.map(m => m.id)
-      };
-
-      this.http.post('http://localhost:8080/api/v1/letters', letterDTO)
-        .subscribe({
-          next: (response) => {
-            console.log('Letter saved:', response);
-            
-            alert('Letter successfully sent!');
-            this.letterTitle = '';
-            this.letterDescription = '';
-            this.letterText = '';
-            this.selectedMedications = [];
-            this.closeModal();
-            this.cdRef.markForCheck();
-            
-          },
-          error: (err) => {
-            console.error('Error saving letter', err);
-            alert('Error sending letter!');
-          }
-        });
-    }).unsubscribe();
-  }
+    });
+  });
+}
 
   emptySelectedMedications(): void {
     this.selectedMedications = [];

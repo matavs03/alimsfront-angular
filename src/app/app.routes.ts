@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
 import { AdminList } from './admin-list/admin-list';
-import { MedicationList } from './medication-list/medication-list';
 import { Login } from './login/login';
+import { LetterList } from './letter-list/letter-list';
 
 export const routes: Routes = [
     {path: 'admin', component: Login},
-    {path: 'medications', component: MedicationList},
-    {path: '', redirectTo: 'medications', pathMatch: 'full'}
+    {path: 'letters', component: LetterList},
+    {path: '', redirectTo: 'letters', pathMatch: 'full'}
 ];

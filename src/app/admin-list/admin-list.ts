@@ -21,7 +21,7 @@ export class AdminList implements OnInit{
   ngOnInit(): void{
     this.getAdmins();
     this.loggedInAdminName$ = this.adminService.currentAdmin$.pipe(
-      map(admin => admin ? admin.firstName : '') // Uzimamo samo firstName
+      map(admin => admin ? admin.firstName : '')
     );
   }
   

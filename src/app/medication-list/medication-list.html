@@ -1,39 +1,37 @@
 <h2>Medications list</h2>
-
-
 <div class="alphabet-buttons">
-   <button *ngFor="let letter of alphabet" (click)="filterByLetter(letter)">
-     {{ letter }}
-     </button>
-   <button (click)="filterByLetter('')" class="all-btn">All</button>
+  <button *ngFor="let letter of alphabet" (click)="filterByLetter(letter)">
+    {{ letter }}
+  </button>
+  <button (click)="filterByLetter('')" class="all-btn">All</button>
 </div>
 
 <div class="pagination-controls">
-   <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
-   <span>Page {{ currentPage }} of {{ totalPages }}</span>
-   <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+  <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
+  <span>Page {{ currentPage }} of {{ totalPages }}</span>
+  <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
 </div>
 
 <table class="table table-striped" *ngIf="displayedMedications.length > 0">
-   <thead>
-     <tr>
-       <th>ID</th>
-       <th>Name</th>
-       <th>Manufacturer</th>
-       <th>INN</th>
-       <th>Dosage form</th>
-       </tr>
-     </thead>
-   <tbody>
-    <tr *ngFor="let medication of displayedMedications; trackBy: trackByMedicationId"
-      (click)="onRowClick(medication)" [class.selected]="isLekSelected(medication)"> 
-       <td>{{ medication.id }}</td>
-       <td>{{ medication.name }}</td>
-       <td>{{ medication.manufacturer }}</td>
-       <td>{{ medication.inn }}</td>
-       <td>{{ medication.dosage_form }}</td>
-       </tr>
-     </tbody>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Manufacturer</th>
+      <th>INN</th>
+      <th>Dosage form</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let medication of displayedMedications; trackBy: trackByMedicationId" (click)="onRowClick(medication)"
+      [class.selected]="isLekSelected(medication)">
+      <td>{{ medication.id }}</td>
+      <td>{{ medication.name }}</td>
+      <td>{{ medication.manufacturer }}</td>
+      <td>{{ medication.inn }}</td>
+      <td>{{ medication.dosage_form }}</td>
+    </tr>
+  </tbody>
 </table>
 
 <button class="back-to-top" (click)="scrollToTop()">Back to Top</button>
@@ -41,37 +39,37 @@
 
 <div class="fixed-letter-actions" *ngIf="selectedMedications.length > 0">
   <button (click)="emptySelectedMedications()" class="empty-list-btn">
-     Delete selection ({{ selectedMedications.length }})
-    </button>
+    Delete selection ({{ selectedMedications.length }})
+  </button>
 
   <button (click)="openModal()" class="create-letter-btn">
-     Make a letter ({{ selectedMedications.length }})
-     </button>
+    Make a letter ({{ selectedMedications.length }})
+  </button>
 </div>
 
 
 <div class="pagination-controls">
-   <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
-   <span>Page {{ currentPage }} of {{ totalPages }}</span>
-   <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+  <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
+  <span>Page {{ currentPage }} of {{ totalPages }}</span>
+  <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
 </div>
 
 
 <div class="modal-overlay" *ngIf="isModalOpen">
-   <div class="modal-content">
-     <h3>Letter</h3>
-    
-     <h4>Selected medication:</h4>
-     <table class="table table-modal">
-       <thead>
-         <tr>
+  <div class="modal-content">
+    <h3>Letter</h3>
+
+    <h4>Selected medication:</h4>
+    <table class="table table-modal">
+      <thead>
+        <tr>
           <th>ID</th>
           <th>Name</th>
           <th>Manufacturer</th>
           <th>INN</th>
           <th>Dosage form</th>
-           </tr>
-        </thead>
+        </tr>
+      </thead>
       <tbody>
         <tr *ngFor="let medication of selectedMedications">
           <td>{{ medication.id }}</td>
@@ -79,29 +77,27 @@
           <td>{{ medication.manufacturer }}</td>
           <td>{{ medication.inn }}</td>
           <td>{{ medication.dosage_form }}</td>
-          </tr>
-        </tbody>
-      </table>
-      <!-- NOVI ELEMENTI ZA NASLOV I OPIS -->
-     <h4>Letter Title:</h4>
-     <input type="text" [(ngModel)]="letterTitle" placeholder="Enter the title of the letter" class="letter-input-title" />
+        </tr>
+      </tbody>
+    </table>
 
-     <h4>Letter Description:</h4>
-     <textarea [(ngModel)]="letterDescription" rows="4" 
-        placeholder="Brief description of the letter (e.g., purpose, patient info)">
-     </textarea>
-     <!-- KRAJ NOVIH ELEMENATA -->
+    <h4>Letter Title:</h4>
+    <input type="text" [(ngModel)]="letterTitle" placeholder="Enter the title of the letter"
+      class="letter-input-title" />
 
-    <h4>Main Text:</h4>
-    <textarea  [(ngModel)]="letterText" rows="8" 
-      placeholder="Main body of the letter">
-    </textarea>
+    <h4>Letter Description:</h4>
+    <textarea [(ngModel)]="letterDescription" rows="4"
+      placeholder="Brief description of the letter (e.g., purpose, patient info)">
+</textarea>
 
-    <div class="modal-actions">
-      <button (click)="closeModal()" class="btn-cancel">Close</button>
-      <button (click)="sendLetter()" class="btn-send"  
-        [disabled]="!letterTitle.trim() || !letterText.trim()">
-        Send
-        </button>
-      </div>
-        </div>
+
+    <h4>Main Text:</h4>
+    <textarea  [(ngModel)]="letterText" rows="8" placeholder="Main body of the letter"></textarea>
+
+    <div class="modal-actions">
+      <button (click)="closeModal()" class="btn-cancel">Close</button>
+      <button (click)="sendLetter()" class="btn-send"   [disabled]="!letterTitle.trim() || !letterText.trim()">
+        Send
+      </button>
+    </div>
+  </div>
