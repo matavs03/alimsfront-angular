@@ -24,7 +24,7 @@ export class LetterList implements OnInit {
   constructor(
     private letterService: LetterService,
     private cdRef: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getLetters();
@@ -67,5 +67,20 @@ export class LetterList implements OnInit {
 
   prevPage(): void {
     this.goToPage(this.currentPage - 1);
+  }
+
+
+  openPdf(letter: Letter) {
+    this.letterService.downloadLetter(letter.id).subscribe({
+      next: (data: Blob) => {
+        const blob = new Blob([data], { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(blob);
+        window.open(url); // otvara PDF u novom tabu
+      },
+      error: (err) => {
+        console.error('Error opening PDF:', err);
+        alert('Failed to open PDF.');
+      }
+    });
   }
 }

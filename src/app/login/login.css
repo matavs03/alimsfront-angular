@@ -126,3 +126,43 @@ footer {
   border-top: 1px solid #ddd;
   font-size: 14px;
 }
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.action-buttons button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.1s, background-color 0.3s;
+    color: white;
+}
+
+/* Dugme za Make a Letter */
+.action-buttons button:first-child {
+    background-color: #4a90e2; /* plava */
+}
+
+.action-buttons button:first-child:hover {
+    background-color: #3a7bd5;
+}
+
+/* Dugme za Make an Educational Material */
+.action-buttons button:last-child {
+    background-color: #50c878; /* zelena */
+}
+
+.action-buttons button:last-child:hover {
+    background-color: #3da35d;
+}
+
+.action-buttons button:active {
+    transform: scale(0.97);
+}

@@ -6,7 +6,7 @@ import { MedicationList } from './medication-list/medication-list';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, AdminList, MedicationList],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrls: ['./app.css']
 })

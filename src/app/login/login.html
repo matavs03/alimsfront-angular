@@ -1,6 +1,7 @@
 <div class="page-container">
   <div class="content-wrap">
 
+    <!-- Login forma -->
     <div *ngIf="!loggedIn" class="login-form">
       <h2>Login</h2>
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
@@ -17,9 +18,15 @@
       <p *ngIf="loginError" style="color:red">{{ loginError }}</p>
     </div>
 
-    <div *ngIf="loggedIn">
+    <!-- Dashboard posle logina -->
+    <div *ngIf="loggedIn" class="dashboard">
       <app-admin-list></app-admin-list>
-      <app-medication-list></app-medication-list>
+
+      <!-- Dugmad za akcije -->
+      <div class="action-buttons">
+        <button (click)="goToLetter()">Make a Letter</button>
+        <button (click)="goToEducationalMaterial()">Make an Educational Material</button>
+      </div>
     </div>
 
   </div>
@@ -28,4 +35,3 @@
     <p>&copy; 2025 Matija Veljković-Šupić & David Bošković</p>
   </footer>
 </div>
-

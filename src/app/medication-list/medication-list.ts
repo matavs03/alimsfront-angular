@@ -6,7 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { AdminService } from '../admin-service';
 import { LetterService, LetterDTO } from '../letter-service';
-
+import { Router } from '@angular/router';
+import { take } from 'rxjs/operators'; // ⭐ DODATI OVO
 
 @Component({
   selector: 'app-medication-list',
@@ -33,17 +34,21 @@ export class MedicationList implements OnInit {
   letterTitle: string = '';
   letterDescription: string = '';
   letterText: string = '';
+  selectedFile: File | null = null;
 
   constructor(
     private medicationService: MedicationService,
     private cdRef: ChangeDetectorRef,
     private http: HttpClient,
     private adminService: AdminService,
-    private letterService: LetterService
+    private letterService: LetterService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
     this.getMedications();
+    this.isModalOpen = false; // ⭐ DODAJTE OVO
+    this.selectedFile = null; // ⭐ I OVO
   }
 
   private getMedications() {
@@ -128,44 +133,53 @@ export class MedicationList implements OnInit {
     this.letterDescription = '';
   }
 
+  onFileSelected(event: any): void {
+    this.selectedFile = event.target.files[0];
+  }
+
   sendLetter(): void {
-  this.adminService.currentAdmin$.subscribe(admin => {
-    if (!admin) {
-      alert('No admin logged in!');
-      return;
-    }
+    this.adminService.currentAdmin$.pipe(take(1)).subscribe(admin => { 
+      
+      if (!admin) {
+        alert('No admin logged in!');
+        return;
+      }
 
-    if (this.selectedMedications.length === 0) {
-      alert('Select at least one medication!');
-      return;
-    }
-
-    const letterDTO = {
-      title: this.letterTitle,
-      description: this.letterDescription,
-      content: this.letterText,
-      adminId: admin.id,
-      medicationIds: this.selectedMedications.map(m => m.id)
-    };
-
-    this.letterService.sendLetter(letterDTO).subscribe({
-      next: (response: any) => {
-        console.log('Letter saved:', response);
-        alert('Letter successfully sent!');
-        this.letterTitle = '';
-        this.letterDescription = '';
-        this.letterText = '';
-        this.selectedMedications = [];
-        this.closeModal();
-        this.cdRef.markForCheck();
-      },
-      error: (err: any) => {
-        console.error('Error saving letter', err);
-        alert('Error sending letter!');
+      if (!this.selectedFile) {
+        alert('Please attach a PDF file!');
+        return;
       }
+
+      const letterDTO = {
+        title: this.letterTitle,
+        description: this.letterDescription,
+        adminId: admin.id,
+        medicationIds: this.selectedMedications.map(m => m.id)
+      };
+
+      this.letterService.sendLetterWithFile(letterDTO, this.selectedFile).subscribe({
+        next: () => {
+          alert('Letter successfully sent!');
+          this.letterTitle = '';
+          this.letterDescription = '';
+          this.letterText = '';
+          this.selectedMedications = [];
+          this.selectedFile = null;
+
+          // Zatvori modal
+          this.isModalOpen = false;
+          this.router.navigate(['/admin']).then(() => {
+            this.router.navigate(['/makeALetter']); // Pređite prvo na neutralnu rutu, pa nazad
+          });
+          this.cdRef.detectChanges();
+        },
+        error: err => {
+          console.error('Error uploading letter:', err);
+          alert('Error sending letter!');
+        }
+      });
     });
-  });
-}
+  }
 
   emptySelectedMedications(): void {
     this.selectedMedications = [];

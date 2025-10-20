@@ -10,6 +10,8 @@ export class AdminService {
   
   private baseURL = "http://localhost:8080/api/v1/admins";
 
+  private isLoggedIn = false;
+
   private loggedInAdminSource = new BehaviorSubject<Admin | null>(null);
   currentAdmin$ = this.loggedInAdminSource.asObservable();
 
@@ -21,6 +23,11 @@ export class AdminService {
 
   setLoggedInAdmin(admin: Admin) {
     this.loggedInAdminSource.next(admin);
+    this.isLoggedIn = true;
+  }
+
+  isLoggedInMethod(): boolean {
+    return this.isLoggedIn;
   }
 
 }

@@ -91,12 +91,12 @@
 </textarea>
 
 
-    <h4>Main Text:</h4>
-    <textarea  [(ngModel)]="letterText" rows="8" placeholder="Main body of the letter"></textarea>
+    <h4>Attach PDF:</h4>
+    <input type="file" (change)="onFileSelected($event)" accept="application/pdf" />
 
     <div class="modal-actions">
       <button (click)="closeModal()" class="btn-cancel">Close</button>
-      <button (click)="sendLetter()" class="btn-send"   [disabled]="!letterTitle.trim() || !letterText.trim()">
+      <button (click)="sendLetter()" class="btn-send" [disabled]="!letterTitle.trim() || !selectedFile">
         Send
       </button>
     </div>

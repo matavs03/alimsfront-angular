@@ -2,7 +2,7 @@ export class Letter {
     id!: number;
     title!: string;
     description!: string;
-    content!: string;
+    fileName!: string;
     date!: Date;
     adminName!: string;
     medicationNames!: string[];

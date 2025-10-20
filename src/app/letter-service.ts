@@ -6,7 +6,6 @@ import { Letter } from './letter';
 export interface LetterDTO {
   title: string;
   description: string;
-  content: string;
   adminId: number;
   medicationIds: string[];
 }
@@ -25,7 +24,14 @@ export class LetterService {
   }
 
 
-  sendLetter(letterDTO: LetterDTO): Observable<any> {
-  return this.http.post(this.baseURL, letterDTO);
+  sendLetterWithFile(letterDTO: LetterDTO, file: File): Observable<any> {
+  const formData = new FormData();
+  formData.append('letter', new Blob([JSON.stringify(letterDTO)], { type: 'application/json' }));
+  formData.append('file', file);
+  return this.http.post(this.baseURL, formData);
+}
+
+  downloadLetter(id: number): Observable<Blob> {
+  return this.http.get(`http://localhost:8080/api/v1/letters/${id}/download`, { responseType: 'blob' });
 }
 }
