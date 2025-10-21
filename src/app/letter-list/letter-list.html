@@ -11,8 +11,10 @@
   <div *ngFor="let letter of displayedLetters" class="letter-card">
     <h3>{{ letter.title }}</h3>
     <p class="letter-date">{{ letter.date | date: 'medium' }}</p>
-    <p><strong>Admin:</strong> {{ letter.adminName }}</p>
+    <p>{{ letter.description }}</p>
     <p><strong>Medications:</strong> {{ letter.medicationNames.join(', ') }}</p>
+    <p><strong>Admin:</strong> {{ letter.adminName }}</p>
+    
 
     <div class="letter-footer">
       <button class="btn-read" (click)="openPdf(letter)">View Letter</button>
@@ -31,4 +33,4 @@
 </footer>
 
 
-//HTML fajl za prikaz liste pisama sa paginacijom i mogućnošću otvaranja PDF pisama u novom tabu
+<!-- HTML fajl za prikaz liste pisama sa paginacijom i mogućnošću otvaranja PDF pisama u novom tabu -->

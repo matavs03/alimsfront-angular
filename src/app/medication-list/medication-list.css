@@ -283,15 +283,13 @@ tr.selected td {
 
 .modal-content {
   background: #fff;
-  padding: 40px;
+  padding: 30px;
   border-radius: 10px;
   width: 90%;
-  max-width: 1000px;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-  transform: scale(1);
-  transition: transform 0.3s ease-out;
+  max-width: 1000px;   /* smanjeno sa 1000px */
+  max-height: 100vh;   /* koristi 80% visine ekrana */
+  overflow-y: auto;   /* scroll ako sadržaj pređe */
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
 }
 
 .modal-content h3 {
@@ -386,6 +384,18 @@ tr.selected td {
 .btn-cancel:hover {
   background-color: #b3b3b3;
 }
+
+.file-input-wrapper {
+  width: 100%;
+  padding: 5px 0;
+  margin-bottom: 10px;
+}
+
+.file-input-wrapper input[type="file"] {
+  width: 100%;
+  display: block;
+}
+
 
 
 /* CSS fajl za medication list komponentu */
