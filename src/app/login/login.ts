@@ -14,12 +14,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.css']
 })
 export class Login {
-  loginForm: FormGroup;
-  loginError: string = '';
-  loggedIn: boolean = false;
+  loginForm: FormGroup;     // Forma za login
+  loginError: string = '';  // Poruka o grešci pri loginu
+  loggedIn: boolean = false;  // Status prijave
 
   constructor(private fb: FormBuilder, private adminService: AdminService, private cdRef: ChangeDetectorRef, private router: Router) {
-    this.loginForm = this.fb.group({
+    this.loginForm = this.fb.group({    // pomocu FormBuilder-a kreiramo formu sa dva polja: username i password, forma je vezana za typescript logiku, ne za html
       username: [''],
       password: ['']
     });
@@ -27,39 +27,34 @@ export class Login {
 
   onSubmit() {
 
-    const { username, password } = this.loginForm.value;
+    const { username, password } = this.loginForm.value;      // izvlačimo username i password iz forme
 
 
     this.adminService.getAdminsList().subscribe(admins => {
-      const admin = admins.find(a => a.username === username && a.password === password);
+      const admin = admins.find(a => a.username === username && a.password === password);     // tražimo admina sa unetim username-om i password-om
 
-      if (admin) {
-        this.loggedIn = true; // login uspešan
-        this.adminService.setLoggedInAdmin(admin);
-
-
-        localStorage.setItem('isLoggedIn', 'true'); // Možete koristiti i pravi token ovde
-
-
-
+      if (admin) {                                                                              
+        this.loggedIn = true;                                                 // ako je pronađen, postavljamo loggedIn na true
+        this.adminService.setLoggedInAdmin(admin);                            // i obaveštavamo AdminService o prijavljenom adminu             
+        localStorage.setItem('isLoggedIn', 'true');                           // čuvamo status prijave u localStorage-u
       } else {
-        this.loginError = 'Username or password is incorrect';
+        this.loginError = 'Username or password is incorrect';                // ako nije pronađen, postavljamo poruku o gresci
       }
-      this.cdRef.markForCheck();
+      this.cdRef.markForCheck();                                              // osvezavamo prikaz komponente
     });
   }
 
-  // Dugmad
-  goToLetter() {
-    if (this.loggedIn) {
+  
+  goToLetter() {                                                              // metoda za navigaciju ka stranici za pravljenje pisma
+    if (this.loggedIn) {                                                      // proveravamo da li je korisnik prijavljen
       console.log('Navigating to Make a Letter');
-      this.router.navigate(['/makeALetter']);
+      this.router.navigate(['/makeALetter']);                                 // navigiramo ka stranici za pravljenje pisma
     }
   }
 
-  goToEducationalMaterial() {
+  goToEducationalMaterial() {                                                 // metoda za navigaciju ka stranici za pravljenje edukativnog materijala
     if (this.loggedIn) {
-      this.router.navigate(['/makeAEducationalMaterial']);
+      this.router.navigate(['/makeAEducationalMaterial']);                    // navigiramo ka stranici za pravljenje edukativnog materijala
     }
   }
 }

@@ -3,11 +3,9 @@ import { MedicationService } from '../medication-service';
 import { Medication } from '../medication';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { AdminService } from '../admin-service';
-import { LetterService, LetterDTO } from '../letter-service';
-import { Router } from '@angular/router';
-import { take } from 'rxjs/operators'; // ⭐ DODATI OVO
+import { LetterService} from '../letter-service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-medication-list',
@@ -17,41 +15,38 @@ import { take } from 'rxjs/operators'; // ⭐ DODATI OVO
   styleUrls: ['./medication-list.css']
 })
 export class MedicationList implements OnInit {
-  medications: Medication[] = [];
-  displayedMedications: Medication[] = [];
+  medications: Medication[] = [];                   // Svi lekovi
+  displayedMedications: Medication[] = [];          // Lekovi za prikaz na trenutnoj stranici
 
-  alphabet: string[] = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-  currentLetter: string = '';
+  alphabet: string[] = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');     // Abeceda za filtriranje
+  currentLetter: string = '';                                      // Trenutno izabrano slovo za filtriranje
 
-  currentPage: number = 1;
-  pageSize: number = 100;
-  totalPages: number = 0;
+  currentPage: number = 1;                                         // Trenutna stranica
+  pageSize: number = 100;                                          // Broj lekova po stranici
+  totalPages: number = 0;                                          // Ukupan broj stranica
 
-  selectedLekId: string | null = null;
+  selectedLekId: string | null = null;                             // ID izabranog leka
 
-  selectedMedications: Medication[] = [];
-  isModalOpen: boolean = false;
-  letterTitle: string = '';
-  letterDescription: string = '';
-  letterText: string = '';
-  selectedFile: File | null = null;
+  selectedMedications: Medication[] = [];                          // Izabrani lekovi za slanje u pismu
+  isModalOpen: boolean = false;                                    // Stanje modala za slanje pisma
+  letterTitle: string = '';                                        // Naslov pisma
+  letterDescription: string = '';                                  // Opis pisma
+  selectedFile: File | null = null;                                // Izabrani PDF fajl
 
-  constructor(
+  constructor(                                                     // Injektovanje servisa
     private medicationService: MedicationService,
     private cdRef: ChangeDetectorRef,
-    private http: HttpClient,
     private adminService: AdminService,
     private letterService: LetterService,
-    private router: Router
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {                                               // Inicijalizacija komponente, uzima lekove i resetuje modal
     this.getMedications();
-    this.isModalOpen = false; // ⭐ DODAJTE OVO
-    this.selectedFile = null; // ⭐ I OVO
+    this.isModalOpen = false;
+    this.selectedFile = null;
   }
 
-  private getMedications() {
+  private getMedications() {                                             // Uzimanje liste lekova iz servisa, pretplata na Observable, azuriranje prikaza i detekcija promena
     this.medicationService.getMedicationList().subscribe(data => {
       this.medications = data;
       this.updateDisplayedMedications();
@@ -59,66 +54,65 @@ export class MedicationList implements OnInit {
     });
   }
 
-  filterByLetter(letter: string) {
+  filterByLetter(letter: string) {                                      // Filtriranje lekova po slovu, resetovanje stranice i azuriranje prikaza
     this.currentLetter = letter;
     this.currentPage = 1;
     this.updateDisplayedMedications();
   }
 
-  updateDisplayedMedications() {
+  updateDisplayedMedications() {                                        // Azuriranje prikazanih lekova na osnovu trenutnog slova i stranice
     let filtered = this.medications;
     if (this.currentLetter) {
       filtered = this.medications.filter(med =>
         med.name.toUpperCase().startsWith(this.currentLetter)
       );
     }
-
     this.totalPages = Math.ceil(filtered.length / this.pageSize);
     const start = (this.currentPage - 1) * this.pageSize;
     const end = start + this.pageSize;
     this.displayedMedications = filtered.slice(start, end);
   }
 
-  goToPage(page: number) {
+  goToPage(page: number) {                                               // Navigacija na stranicu, azuriranje prikaza
     if (page < 1 || page > this.totalPages) return;
     this.currentPage = page;
     this.updateDisplayedMedications();
   }
 
-  nextPage() {
+  nextPage() {                                                            // Navigacija na sledeću stranicu
     this.goToPage(this.currentPage + 1);
   }
-
-  prevPage() {
+ 
+  prevPage() {                                                          // Navigacija na prethodnu stranicu
     this.goToPage(this.currentPage - 1);
   }
 
-  scrollToTop(): void {
+  scrollToTop(): void {                                            // Skrolovanje na vrh stranice
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  trackByMedicationId(index: number, medication: any): string {
+  trackByMedicationId(index: number, medication: any): string {     // Praćenje lekova po ID-ju za optimizaciju performansi
     return medication.id;
   }
 
-  onRowClick(lek: Medication): void {
-    const lekId = String(lek.id);
+  onRowClick(lek: Medication): void {                                       // Rukovanje klikom na red, izbor/odabir leka
+    const lekId = String(lek.id);                                            // Dobijanje ID-ja leka kao string
     const index = this.selectedMedications.findIndex(m => m.id === lekId);
     if (index > -1) {
-      this.selectedMedications.splice(index, 1);
+      this.selectedMedications.splice(index, 1);                               // Uklanjanje leka iz izabranih ako je već izabran
     } else {
-      this.selectedMedications.push(lek);
+      this.selectedMedications.push(lek);                                     // Dodavanje leka u izabrane ako nije izabran
     }
-    console.log('Selected medication:', this.selectedMedications);
-    this.cdRef.markForCheck(); // Forsira proveru promena
+    console.log('Selected medication:', this.selectedMedications);            // Ispis izabranih lekova
+    this.cdRef.markForCheck();                                                // Forsira proveru promena
   }
 
-  isLekSelected(lek: Medication): boolean {
-    return this.selectedMedications.some(m => m.id === lek.id);
+  isLekSelected(lek: Medication): boolean {                           // Provera da li je lek izabran
+    return this.selectedMedications.some(m => m.id === lek.id);            // Vraća true ako je lek izabran, inače false
   }
 
-  openModal(): void {
-    if (this.selectedMedications.length === 0) {
+  openModal(): void {                                               // Otvaranje modala za slanje pisma, provera da li je izabran bar jedan lek
+    if (this.selectedMedications.length === 0) {                              
       alert('You have to select at least one medication');
       return;
     }
@@ -126,62 +120,55 @@ export class MedicationList implements OnInit {
   }
 
 
-  closeModal(): void {
+  closeModal(): void {                                              // Zatvaranje modala i resetovanje polja
     this.isModalOpen = false;
-    this.letterText = '';
     this.letterTitle = '';
     this.letterDescription = '';
   }
 
-  onFileSelected(event: any): void {
-    this.selectedFile = event.target.files[0];
+  onFileSelected(event: any): void {                                      // Rukovanje izborom fajla iz inputa
+    this.selectedFile = event.target.files[0];                            // Postavljanje izabranog fajla
   }
 
-  sendLetter(): void {
-    this.adminService.currentAdmin$.pipe(take(1)).subscribe(admin => { 
-      
-      if (!admin) {
-        alert('No admin logged in!');
-        return;
-      }
+  sendLetter(): void {                                                   // Slanje pisma sa izabranim lekovima i fajlom
+    this.adminService.currentAdmin$.pipe(take(1)).subscribe(admin => {   // Uzimanje trenutno ulogovanog admina, take (1) za jednokratnu pretplatu
 
-      if (!this.selectedFile) {
+      if (!admin) {                                                      // Provera da li je admin ulogovan
+        alert('No admin logged in!');
+        return;
+      }
+
+      if (!this.selectedFile) {                                            // Provera da li je izabran fajl
         alert('Please attach a PDF file!');
         return;
       }
 
-      const letterDTO = {
+      const letterDTO = {                                                 // Kreiranje DTO objekta za pismo
         title: this.letterTitle,
         description: this.letterDescription,
         adminId: admin.id,
-        medicationIds: this.selectedMedications.map(m => m.id)
+        medicationIds: this.selectedMedications.map(m => m.id)             // Mapiranje izabranih lekova na njihove ID-jeve
       };
 
-      this.letterService.sendLetterWithFile(letterDTO, this.selectedFile).subscribe({
-        next: () => {
+      this.letterService.sendLetterWithFile(letterDTO, this.selectedFile).subscribe({     // Slanje pisma sa fajlom putem servisa
+        next: () => {                                                                     
           alert('Letter successfully sent!');
-          this.letterTitle = '';
+          this.letterTitle = '';                                                   // Resetovanje polja nakon uspešnog slanja
           this.letterDescription = '';
-          this.letterText = '';
           this.selectedMedications = [];
           this.selectedFile = null;
-
-          // Zatvori modal
-          this.isModalOpen = false;
-          this.router.navigate(['/admin']).then(() => {
-            this.router.navigate(['/makeALetter']); // Pređite prvo na neutralnu rutu, pa nazad
-          });
-          this.cdRef.detectChanges();
+          this.isModalOpen = false;                                               // Zatvaranje modala nakon uspešnog slanja
+          this.cdRef.detectChanges();                                             // Detekcija promena nakon slanja pisma
         },
-        error: err => {
-          console.error('Error uploading letter:', err);
+        error: err => {                                                          // Rukovanje greškom pri slanju pisma
+          console.error('Error uploading letter:', err);   
           alert('Error sending letter!');
         }
       });
     });
   }
 
-  emptySelectedMedications(): void {
+  emptySelectedMedications(): void {                                          // Pražnjenje liste izabranih lekova
     this.selectedMedications = [];
     this.cdRef.markForCheck();
   }

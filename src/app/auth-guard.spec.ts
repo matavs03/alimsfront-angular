@@ -14,3 +14,5 @@ describe('AuthGuard', () => {
     expect(service).toBeTruthy();
   });
 });
+
+//klasa za testiranje AuthGuard-a, proverava da li se servis uspešno kreira

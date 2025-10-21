@@ -8,7 +8,9 @@ import { MedicationList } from './medication-list/medication-list';
 export const routes: Routes = [
     { path: 'admin', component: Login },
     { path: 'letters', component: LetterList},
-    { path: 'makeALetter', component: MedicationList, canActivate: [AuthGuard] },
-    { path: 'makeAEducationalMaterial', component: LetterList, canActivate: [AuthGuard] },
-    { path: '', redirectTo: 'letters', pathMatch: 'full' }
+    { path: 'makeALetter', component: MedicationList, canActivate: [AuthGuard] },      //AuthGuard za zastitu ruta
+    { path: 'makeAEducationalMaterial', component: LetterList, canActivate: [AuthGuard] },   //AuthGuard za zastitu ruta
+    { path: '', redirectTo: 'letters', pathMatch: 'full' }              // Podrazumevana ruta
 ];
+
+// Definisanje ruta aplikacije

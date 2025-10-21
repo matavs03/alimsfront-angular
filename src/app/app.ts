@@ -4,12 +4,14 @@ import { AdminList } from './admin-list/admin-list';
 import { MedicationList } from './medication-list/medication-list';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet],
-  templateUrl: './app.html',
-  styleUrls: ['./app.css']
+  selector: 'app-root',       // Selektor glavne komponente
+  standalone: true,           // Oznacava da je komponenta samostalna
+  imports: [RouterOutlet],    // Uvoz potrebnih modula
+  templateUrl: './app.html',  // Putanja do HTML templejta
+  styleUrls: ['./app.css']    // Putanja do CSS stilova
 })
 export class App {
   protected readonly title = signal('lekovi-front');
 }
+
+// Glavna (root) komponenta aplikacije

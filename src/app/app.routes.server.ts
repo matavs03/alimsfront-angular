@@ -6,3 +6,5 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Prerender
   }
 ];
+
+//klasa za server rute, koristi se za prerendering svih ruta aplikacije

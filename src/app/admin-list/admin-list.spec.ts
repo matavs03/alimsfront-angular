@@ -21,3 +21,5 @@ describe('AdminList', () => {
     expect(component).toBeTruthy();
   });
 });
+
+// Test za AdminList komponentu, proverava da li se komponenta uspešno kreira

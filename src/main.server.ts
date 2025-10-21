@@ -6,3 +6,5 @@ const bootstrap = (context: BootstrapContext) =>
     bootstrapApplication(App, config, context);
 
 export default bootstrap;
+
+// Glavna serverska datoteka za Angular aplikaciju

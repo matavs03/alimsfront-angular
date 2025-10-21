@@ -23,3 +23,5 @@ describe('App', () => {
     expect(compiled.querySelector('h1')?.textContent).toContain('Hello, lekovi-front');
   });
 });
+
+// Glavna test datoteka za aplikaciju Angular

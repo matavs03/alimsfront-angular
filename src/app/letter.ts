@@ -7,3 +7,5 @@ export class Letter {
     adminName!: string;
     medicationNames!: string[];
 }
+
+// Model klase za pismo sa atributima kao što su id, naslov, opis, ime fajla, datum, ime administratora i imena lekova.

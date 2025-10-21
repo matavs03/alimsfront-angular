@@ -11,21 +11,21 @@ import { map, Observable } from 'rxjs';
   templateUrl: './admin-list.html',
   styleUrls: ['./admin-list.css']
 })
-export class AdminList implements OnInit{
-  admins$!: Observable<Admin[]>
+export class AdminList implements OnInit{               //definisanje komponente, OnInit za inicijalizaciju
+  admins$!: Observable<Admin[]>;         //lista admin, $ oznacava da je Observable
 
-  loggedInAdminName$!: Observable<string>;
+  loggedInAdminName$!: Observable<string>;      //ime ulogovanog admina
 
-  constructor(private adminService: AdminService){}
+  constructor(private adminService: AdminService){}      //injektovanje servisa
 
-  ngOnInit(): void{
-    this.getAdmins();
-    this.loggedInAdminName$ = this.adminService.currentAdmin$.pipe(
-      map(admin => admin ? admin.firstName : '')
+  ngOnInit(): void{                                                     //inicijalizacija komponente
+    this.getAdmins();                                                //pozivanje metode za dobijanje liste admina                   
+    this.loggedInAdminName$ = this.adminService.currentAdmin$.pipe(    //dobijanje imena ulogovanog admina
+      map(admin => admin ? admin.firstName : '')                        //mapiranje Observable objekta da bi se izvuklo ime
     );
   }
   
-  private getAdmins(){
-    this.admins$ = this.adminService.getAdminsList();
+  private getAdmins(){                                            //metoda za dobijanje liste admina
+    this.admins$ = this.adminService.getAdminsList();             //uzimanje Observable liste admina iz servisa
   }
 }

@@ -21,3 +21,5 @@ describe('Login', () => {
     expect(component).toBeTruthy();
   });
 });
+
+//jednostavan test za login komponentu, proverava da li se komponenta uspesno kreira

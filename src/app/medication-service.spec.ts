@@ -14,3 +14,5 @@ describe('MedicationService', () => {
     expect(service).toBeTruthy();
   });
 });
+
+//klasa za testiranje servisa koji upravlja lekovima u aplikaciji

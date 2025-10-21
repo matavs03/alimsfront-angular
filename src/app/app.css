@@ -5,11 +5,11 @@ html, body {
 
 .page-container {
   position: relative;
-  min-height: 100vh; /* zauzima celu visinu ekrana */
+  min-height: 100vh; 
 }
 
 .content-wrap {
-  padding-bottom: 60px; /* visina footera */
+  padding-bottom: 60px; 
 }
 
 footer {
@@ -22,8 +22,10 @@ footer {
   color: #333;
   text-align: center;
   display: flex;
-  align-items: center;  /* vertikalno centriranje */
-  justify-content: center; /* horizontalno centriranje */
+  align-items: center;  
+  justify-content: center; 
   border-top: 1px solid #ddd;
   font-size: 14px;
 }
+
+/* Stilovi za navigacioni meni */

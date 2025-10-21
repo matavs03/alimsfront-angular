@@ -21,3 +21,5 @@ describe('MedicationList', () => {
     expect(component).toBeTruthy();
   });
 });
+
+// Test za komponentu MedicationList, proverava da li se komponenta uspešno kreira

@@ -7,11 +7,11 @@ import { Medication } from './medication';
   providedIn: 'root'
 })
 export class MedicationService {
-  private baseURL = "http://localhost:8080/api/v1/medications";
+  private baseURL = "http://localhost:8080/api/v1/medications"; // Backend URL sa kog se dobijaju podaci o lekovima
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {} // Injektovanje HttpClient servisa za pravljenje HTTP zahteva
 
-  getMedicationList(): Observable<Medication[]>{
-    return this.httpClient.get<Medication[]>(`${this.baseURL}`);
+  getMedicationList(): Observable<Medication[]>{  // Metoda za dobijanje liste lekova
+    return this.httpClient.get<Medication[]>(`${this.baseURL}`); // Pravljenje GET zahteva ka backendu
   }
 }

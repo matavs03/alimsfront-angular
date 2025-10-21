@@ -5,3 +5,5 @@ describe('Medication', () => {
     expect(new Medication()).toBeTruthy();
   });
 });
+
+// Test za klasu medication (konstruktor i inicijalizacija objekta)

@@ -21,3 +21,5 @@ describe('LetterList', () => {
     expect(component).toBeTruthy();
   });
 });
+
+//jedinicni testovi za komponentu LetterList

@@ -5,3 +5,5 @@ export class Medication {
     manufacturer!: string;
     name!: string;
 }
+
+// Model klase za lekove sa atributima: id, inn, oblik doze, proizvođač i naziv leka

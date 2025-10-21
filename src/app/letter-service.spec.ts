@@ -14,3 +14,5 @@ describe('LetterService', () => {
     expect(service).toBeTruthy();
   });
 });
+
+//klasa za testiranje servisa koji rukuje slovima, koristi Angular-ov TestBed za postavljanje okruženja za testiranje i proverava da li je servis uspešno kreiran

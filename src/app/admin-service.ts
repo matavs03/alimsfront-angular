@@ -8,26 +8,26 @@ import { Admin } from './admin';
 })
 export class AdminService {
   
-  private baseURL = "http://localhost:8080/api/v1/admins";
+  private baseURL = "http://localhost:8080/api/v1/admins";   // Backend URL za administratore
 
-  private isLoggedIn = false;
+  private isLoggedIn = false;   // Status prijave
 
-  private loggedInAdminSource = new BehaviorSubject<Admin | null>(null);
-  currentAdmin$ = this.loggedInAdminSource.asObservable();
+  private loggedInAdminSource = new BehaviorSubject<Admin | null>(null);    // Trenutno prijavljeni administrator
+  currentAdmin$ = this.loggedInAdminSource.asObservable();                    // Observable za praćenje prijavljenog administratora
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {}                              // Injektovanje HttpClient-a
 
-  getAdminsList(): Observable<Admin[]>{
-    return this.httpClient.get<Admin[]>(`${this.baseURL}`);
+  getAdminsList(): Observable<Admin[]>{                                    // Dohvatanje liste administratora
+    return this.httpClient.get<Admin[]>(`${this.baseURL}`);                // GET zahtev ka backendu
   }
 
-  setLoggedInAdmin(admin: Admin) {
-    this.loggedInAdminSource.next(admin);
-    this.isLoggedIn = true;
+  setLoggedInAdmin(admin: Admin) {                                      // Postavljanje prijavljenog administratora
+    this.loggedInAdminSource.next(admin);                               // Ažuriranje BehaviorSubject-a
+    this.isLoggedIn = true;                                             // Postavljanje statusa prijave na true
   }
 
-  isLoggedInMethod(): boolean {
-    return this.isLoggedIn;
+  isLoggedInMethod(): boolean {                                          // Provera statusa prijave
+    return this.isLoggedIn;                                              // Vraćanje statusa prijave
   }
 
 }

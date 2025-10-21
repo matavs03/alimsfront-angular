@@ -10,3 +10,5 @@ const serverConfig: ApplicationConfig = {
 };
 
 export const config = mergeApplicationConfig(appConfig, serverConfig);
+
+//klasa za konfiiguraciju Server Side Rendering-a (SSR) u Angular aplikaciji

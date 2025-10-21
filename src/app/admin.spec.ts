@@ -5,3 +5,5 @@ describe('Admin', () => {
     expect(new Admin()).toBeTruthy();
   });
 });
+
+//Test klasa za admina, provera da li radi konstruktor klase
