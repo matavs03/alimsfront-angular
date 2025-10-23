@@ -30,4 +30,8 @@ export class AdminService {
     return this.isLoggedIn;                                              // Vraćanje statusa prijave
   }
 
+  getLoggedInAdmin(): Admin | null {
+  return this.loggedInAdminSource.getValue();
+}
+
 }

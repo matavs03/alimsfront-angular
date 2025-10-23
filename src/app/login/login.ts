@@ -52,9 +52,14 @@ export class Login {
     }
   }
 
-  goToEducationalMaterial() {                                                 // metoda za navigaciju ka stranici za pravljenje edukativnog materijala
-    if (this.loggedIn) {
-      this.router.navigate(['/makeAEducationalMaterial']);                    // navigiramo ka stranici za pravljenje edukativnog materijala
+  goToEducationalMaterial() {     
+  if (this.loggedIn) {
+    const admin = this.adminService.getLoggedInAdmin();
+    if (admin) {
+      const baseUrl = 'http://localhost:5173';
+      const queryParams = `?name=${encodeURIComponent(admin.firstName)}&id=${admin.id}`;
+      window.location.href = `${baseUrl}/${queryParams}`;
     }
   }
+}
 }

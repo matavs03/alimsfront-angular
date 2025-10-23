@@ -83,4 +83,8 @@ export class LetterList implements OnInit {
       }
     });
   }
+
+  goToEducationalMaterials(){
+    window.location.href = 'http://localhost:5173/show';
+  }
 }

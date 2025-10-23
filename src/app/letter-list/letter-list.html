@@ -1,7 +1,13 @@
 <div class="page-header">
   <img src="/alims.jpeg" alt="Alims logo" class="header-logo" />
   <h2>ALIMS - Letters for healthcare workers</h2>
+
+  <button class="view-educational-btn" (click)="goToEducationalMaterials()">
+    View Educational Materials
+  </button>
 </div>
+
+
 
 <div *ngIf="displayedLetters.length === 0">
   <em>No letters available.</em>
